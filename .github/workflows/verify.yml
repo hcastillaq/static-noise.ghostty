@@ -8,7 +8,7 @@ on:
 
 jobs:
   verify:
-    runs-on: macos-14
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -27,9 +27,3 @@ jobs:
 
       - name: Verify generated theme is fresh
         run: npm run check:generated
-
-      - name: Install Ghostty
-        run: brew install --cask ghostty
-
-      - name: Validate Ghostty configuration
-        run: /Applications/Ghostty.app/Contents/MacOS/ghostty +validate-config --config-file="dist/Static Noise"

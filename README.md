@@ -62,16 +62,16 @@ Check that the committed theme matches the current snapshot:
 npm run check:generated
 ```
 
-Validate syntax against Ghostty's official validator:
-
-```bash
-npm run validate:ghostty
-```
-
 Run all project checks together:
 
 ```bash
 npm run check
+```
+
+Validate syntax with Ghostty (optional, if `ghostty` is installed locally):
+
+```bash
+npm run validate:ghostty
 ```
 
 ## Updating Static Noise

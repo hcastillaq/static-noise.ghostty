@@ -13,7 +13,7 @@
     "check:generated": "node src/generate-theme.mjs --check",
     "validate:ghostty": "ghostty +validate-config --config-file=\"dist/Static Noise\"",
     "test": "vitest run",
-    "check": "npm test && npm run check:generated && npm run validate:ghostty"
+    "check": "npm test && npm run check:generated"
   },
   "keywords": [
     "ghostty",

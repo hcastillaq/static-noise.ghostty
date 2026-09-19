@@ -1,11 +1,10 @@
-import { readFile, unlink, writeFile } from 'node:fs/promises';
+import { unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { checkThemeFreshness, renderTheme } from '../src/generate-theme.mjs';
 import { GHOSTTY_ANSI_NAMES, ghosttyCoreMapping, ghosttyDerivedMapping } from '../src/ghostty-mapping.mjs';
 import { readAndValidateLock } from '../src/lock.mjs';
 
-const HEX_COLOR_PATTERN = /^#[0-9A-Fa-f]{6}$/;
 
 describe('Ghostty theme generation and distribution contract', () => {
   it('generates a syntactically valid Ghostty theme with all required keys from active lock', async () => {
@@ -50,7 +49,7 @@ describe('Ghostty theme generation and distribution contract', () => {
     try {
       await expect(checkThemeFreshness({ outputPath: testStaleFile })).rejects.toThrow(/is stale or was modified manually/);
     } finally {
-      await unlink(testStaleFile).catch(() => {});
+      await unlink(testStaleFile).catch(() => { });
     }
   });
 });
