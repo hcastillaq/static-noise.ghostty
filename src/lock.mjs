@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const SHA_REGEX = /^[0-9a-f]{40}$/;
 const SEMVER_REGEX = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
-const REPO_REGEX = /^https:\/\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+(?:\/[A-Za-z0-9_.-]+)*?(?:\.git)?$/;
+const REPO_REGEX = /^(?:https:\/\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+(?:\/[A-Za-z0-9_.-]+)*?(?:\.git)?|\/(?:[^/\0]+\/)*[^/\0]+)$/;
 
 export async function readAndValidateLock(filePath = path.resolve('static-noise.lock.json')) {
   const content = await readFile(filePath, 'utf8');
