@@ -2,27 +2,23 @@
 
 Static Noise adapter for the [Ghostty](https://ghostty.org) terminal emulator.
 
-This project consumes a pinned release of [Static Noise](https://github.com/hcastillaq/static-noise) and translates its semantic color tokens into a ready-to-use Ghostty configuration.
+This project consumes a pinned release of [Static Noise](https://github.com/hcastillaq/static-noise) and translates its semantic color tokens into an installable Ghostty theme.
 
 ## Requirements
 
 - Ghostty `1.3.0` or newer (supports `palette-generate = true` and extended palette derivations).
-- macOS, Linux, or any environment running Ghostty.
+- macOS, Linux, or any platform running Ghostty.
 
 ## Quick Install
 
-### One-line curl install
+### One-line curl install (Latest release)
+
+Download the latest official release asset directly into your Ghostty themes folder:
 
 ```bash
 mkdir -p ~/.config/ghostty/themes
-curl -fsSL -o ~/.config/ghostty/themes/"Static Noise" https://raw.githubusercontent.com/hcastillaq/static-noise.ghostty/main/dist/Static%20Noise
-```
-
-### Or copy from local clone
-
-```bash
-mkdir -p ~/.config/ghostty/themes
-cp "dist/Static Noise" ~/.config/ghostty/themes/
+curl -fsSL -o ~/.config/ghostty/themes/"Static Noise" \
+  https://github.com/hcastillaq/static-noise.ghostty/releases/latest/download/Static%20Noise
 ```
 
 ### Apply in Ghostty
@@ -33,7 +29,7 @@ Open your Ghostty configuration (`~/.config/ghostty/config`) and add:
 theme = Static Noise
 ```
 
-Reload Ghostty (`Cmd+Shift+,` on macOS or restart the application).
+Reload Ghostty (`Cmd+Shift+,` on macOS or restart the terminal).
 
 ## Visual Identity Mapping
 
@@ -57,9 +53,9 @@ Static Noise avoids pure blacks and balances deep surfaces with an electric focu
 
 Detailed mapping decisions are documented in [`docs/mapping.md`](docs/mapping.md).
 
-## Development and Verification
+## Development
 
-Generate the theme into `dist/Static Noise`:
+Build the theme into `dist/Static Noise`:
 
 ```bash
 npm run generate

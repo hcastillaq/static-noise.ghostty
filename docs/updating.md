@@ -28,33 +28,28 @@ npm run sync:palette
 
 This command will:
 - Validate the lockfile format.
-- Clone or fetch the specified SHA in an isolated temporary Git workspace.
+- Fetch the specified SHA in an isolated temporary Git workspace.
 - Validate that `palette.json` matches `schemas/palette.schema.json`.
 - Confirm that `palette.version` matches `lock.version`.
 - Atomically update `vendor/static-noise/palette.json` and `vendor/static-noise/schemas/palette.schema.json`.
 
 If the SHA is unreachable or the version does not match, synchronization aborts and leaves existing vendor files untouched.
 
-### 3. Regenerate the Theme
+### 3. Run the Verification Suite
 
-Regenerate the distributable Ghostty configuration:
-
-```bash
-npm run generate
-```
-
-### 4. Run the Verification Suite
-
-Run the test suite:
+Run the tests to ensure the new palette resolves all required tokens and generates valid Ghostty syntax:
 
 ```bash
 npm test
 ```
 
-### 5. Review and Commit
+### 4. Review and Commit
 
-Review the resulting diff with `git diff`. A clean update should consist of:
+Review the resulting diff with `git diff`. A clean update consists of:
 - The manual edit in `static-noise.lock.json`.
 - The updated snapshot in `vendor/static-noise/`.
-- The regenerated theme in `dist/Static Noise`.
 - Any required adjustments in mapping or documentation if upstream tokens changed.
+
+### 5. Tag and Release
+
+When ready to publish, create a git tag (e.g. `git tag v0.0.2 && git push origin v0.0.2`). The release workflow will automatically compile the theme and publish the new GitHub Release with the downloadable asset.
