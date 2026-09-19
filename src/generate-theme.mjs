@@ -56,7 +56,7 @@ export async function generateThemeFile(options = {}) {
   const repoRoot = options.repoRoot || path.resolve('.');
   const lockPath = options.lockPath || path.join(repoRoot, 'static-noise.lock.json');
   const vendorDir = options.vendorDir || path.join(repoRoot, 'vendor', 'static-noise');
-  const outputPath = options.outputPath || path.join(repoRoot, 'dist', 'Static Noise');
+  const outputPath = options.outputPath || path.join(repoRoot, 'dist', 'static-noise');
 
   const lock = await readAndValidateLock(lockPath);
   const palette = JSON.parse(await readFile(path.join(vendorDir, 'palette.json'), 'utf8'));

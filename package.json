@@ -11,7 +11,7 @@
     "sync:palette": "node scripts/sync-palette.mjs",
     "generate": "node src/generate-theme.mjs",
     "test": "vitest run",
-    "validate:ghostty": "ghostty +validate-config --config-file=\"dist/Static Noise\""
+    "validate:ghostty": "ghostty +validate-config --config-file=\"dist/static-noise\""
   },
   "keywords": [
     "ghostty",
