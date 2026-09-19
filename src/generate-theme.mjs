@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { ghosttyAnsiIndices, ghosttyCoreMapping, ghosttyDerivedMapping } from './ghostty-mapping.mjs';
 import { readAndValidateLock } from './lock.mjs';
 import { resolveNamedPath } from './resolve-token.mjs';
@@ -12,6 +13,10 @@ export async function renderTheme(options = {}) {
   const lock = await readAndValidateLock(lockPath);
   const paletteRaw = await readFile(path.join(vendorDir, 'palette.json'), 'utf8');
   const palette = JSON.parse(paletteRaw);
+
+  if (palette.version !== lock.version) {
+    throw new Error(`Palette version (${palette.version}) does not match lock version (${lock.version}). Run 'npm run sync:palette' first.`);
+  }
 
   const lines = [
     '# Static Noise for Ghostty',
@@ -74,7 +79,7 @@ export async function checkThemeFreshness(options = {}) {
   return true;
 }
 
-if (process.argv[1] === new URL(import.meta.url).pathname) {
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const checkOnly = process.argv.includes('--check');
   try {
     if (checkOnly) {

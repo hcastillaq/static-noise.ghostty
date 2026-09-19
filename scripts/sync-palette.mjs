@@ -3,6 +3,7 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
 import Ajv from 'ajv';
 import { readAndValidateLock } from '../src/lock.mjs';
 
@@ -60,9 +61,10 @@ export async function syncPalette(options = {}) {
       throw new Error(`Palette failed schema validation: ${ajv.errorsText(validate.errors)}`);
     }
 
-    await mkdir(vendorDir, { recursive: true });
+    const schemaDir = path.join(vendorDir, 'schemas');
+    await mkdir(schemaDir, { recursive: true });
     await writeFile(path.join(vendorDir, 'palette.json'), paletteRaw, 'utf8');
-    await writeFile(path.join(vendorDir, 'palette.schema.json'), schemaRaw, 'utf8');
+    await writeFile(path.join(schemaDir, 'palette.schema.json'), schemaRaw, 'utf8');
 
     return {
       version: lock.version,
@@ -74,7 +76,7 @@ export async function syncPalette(options = {}) {
   }
 }
 
-if (process.argv[1] === new URL(import.meta.url).pathname) {
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   try {
     const result = await syncPalette();
     console.log(`Synchronized Static Noise ${result.version} (${result.sha}) into ${result.vendorDir}`);

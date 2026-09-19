@@ -19,7 +19,7 @@ describe('vendor snapshot integrity', () => {
 
   it('validates successfully against the vendored schema', async () => {
     const paletteRaw = await readFile(path.join(vendorDir, 'palette.json'), 'utf8');
-    const schemaRaw = await readFile(path.join(vendorDir, 'palette.schema.json'), 'utf8');
+    const schemaRaw = await readFile(path.join(vendorDir, 'schemas', 'palette.schema.json'), 'utf8');
 
     const palette = JSON.parse(paletteRaw);
     const schema = JSON.parse(schemaRaw);

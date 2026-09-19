@@ -73,6 +73,9 @@ describe('syncPalette script', () => {
 
       const vendoredPalette = JSON.parse(await readFile(path.join(vendorDir, 'palette.json'), 'utf8'));
       expect(vendoredPalette.version).toBe('0.0.1');
+
+      const vendoredSchema = JSON.parse(await readFile(path.join(vendorDir, 'schemas', 'palette.schema.json'), 'utf8'));
+      expect(vendoredSchema.properties.version).toBeDefined();
     } finally {
       await rm(tmpRoot, { recursive: true, force: true }).catch(() => {});
     }
