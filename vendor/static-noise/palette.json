@@ -1,0 +1,108 @@
+{
+  "$schema": "./schemas/palette.schema.json",
+  "$description": "Static Noise: identidad visual oscura, profunda y eléctrica para herramientas de desarrollo.",
+  "name": "Static Noise",
+  "version": "0.0.1",
+  "primitives": {
+    "neutral": {
+      "void": { "$type": "color", "$value": "#0F1117", "$description": "Lienzo más profundo de la identidad." },
+      "surface": { "$type": "color", "$value": "#141720", "$description": "Superficie principal y estable." },
+      "elevated": { "$type": "color", "$value": "#1A1E2B", "$description": "Superficie elevada para paneles y contenedores." },
+      "elevatedHover": { "$type": "color", "$value": "#222738", "$description": "Superficie elevada durante interacción secundaria." },
+      "border": { "$type": "color", "$value": "#272C3E", "$description": "Delimitador estructural sutil." },
+      "borderStrong": { "$type": "color", "$value": "#6E7588", "$description": "Delimitador estructural que debe permanecer visible." },
+      "selection": { "$type": "color", "$value": "#242B3D", "$description": "Selección neutral sin foco activo." }
+    },
+    "content": {
+      "primary": { "$type": "color", "$value": "#E6E2D6", "$description": "Contenido principal y texto de lectura prioritaria." },
+      "secondary": { "$type": "color", "$value": "#C9C8C2", "$description": "Contenido secundario con presencia normal." },
+      "muted": { "$type": "color", "$value": "#9299AE", "$description": "Metadatos, etiquetas y contenido auxiliar." },
+      "subtle": { "$type": "color", "$value": "#62697B", "$description": "Comentarios y detalles de baja prioridad." }
+    },
+    "accent": {
+      "cyan": { "$type": "color", "$value": "#72EAD5", "$description": "Acento de foco y atención activa." },
+      "blue": { "$type": "color", "$value": "#83BFFF", "$description": "Acento frío para funciones y comportamiento." },
+      "purple": { "$type": "color", "$value": "#C2A7FF", "$description": "Acento para transformación y estructura del código." },
+      "magenta": { "$type": "color", "$value": "#F08BC2", "$description": "Acento secundario de la identidad." },
+      "green": { "$type": "color", "$value": "#A3D98B", "$description": "Acento de texto, literal y resultado positivo." },
+      "yellow": { "$type": "color", "$value": "#EDD071", "$description": "Acento de tipo, atención y advertencia." },
+      "orange": { "$type": "color", "$value": "#F3A261", "$description": "Acento de valor, constante y número." },
+      "red": { "$type": "color", "$value": "#EF7785", "$description": "Acento de error, peligro y eliminación." }
+    },
+    "accentDim": {
+      "cyan": { "$type": "color", "$value": "#193C3B", "$description": "Variante tenue del acento cyan." },
+      "blue": { "$type": "color", "$value": "#20344D", "$description": "Variante tenue del acento blue." },
+      "purple": { "$type": "color", "$value": "#332B4D", "$description": "Variante tenue del acento purple." },
+      "magenta": { "$type": "color", "$value": "#48283D", "$description": "Variante tenue del acento magenta." },
+      "green": { "$type": "color", "$value": "#293B2C", "$description": "Variante tenue del acento green." },
+      "yellow": { "$type": "color", "$value": "#443B25", "$description": "Variante tenue del acento yellow." },
+      "orange": { "$type": "color", "$value": "#493124", "$description": "Variante tenue del acento orange." },
+      "red": { "$type": "color", "$value": "#48262E", "$description": "Variante tenue del acento red." }
+    }
+  },
+  "semantic": {
+    "surface": {
+      "canvas": { "$type": "color", "$value": "{primitives.neutral.void}", "$description": "Lienzo raíz de la interfaz." },
+      "base": { "$type": "color", "$value": "{primitives.neutral.surface}", "$description": "Superficie principal." },
+      "elevated": { "$type": "color", "$value": "{primitives.neutral.elevated}", "$description": "Superficie elevada." },
+      "elevatedHover": { "$type": "color", "$value": "{primitives.neutral.elevatedHover}", "$description": "Superficie elevada durante interacción." },
+      "selection": { "$type": "color", "$value": "{primitives.neutral.selection}", "$description": "Selección neutral." }
+    },
+    "content": {
+      "primary": { "$type": "color", "$value": "{primitives.content.primary}", "$description": "Contenido principal." },
+      "secondary": { "$type": "color", "$value": "{primitives.content.secondary}", "$description": "Contenido secundario." },
+      "muted": { "$type": "color", "$value": "{primitives.content.muted}", "$description": "Contenido auxiliar." },
+      "subtle": { "$type": "color", "$value": "{primitives.content.subtle}", "$description": "Contenido de baja prioridad." }
+    },
+    "outline": {
+      "subtle": { "$type": "color", "$value": "{primitives.neutral.border}", "$description": "Separación estructural sutil." },
+      "strong": { "$type": "color", "$value": "{primitives.neutral.borderStrong}", "$description": "Separación estructural visible." }
+    },
+    "interaction": {
+      "focus": { "$type": "color", "$value": "{primitives.accent.cyan}", "$description": "Foco, cursor y atención activa." },
+      "onFocus": { "$type": "color", "$value": "{primitives.neutral.void}", "$description": "Contenido sobre una superficie de foco." }
+    },
+    "status": {
+      "success": { "$type": "color", "$value": "{primitives.accent.green}", "$description": "Resultado positivo o confirmación." },
+      "warning": { "$type": "color", "$value": "{primitives.accent.yellow}", "$description": "Advertencia o atención preventiva." },
+      "danger": { "$type": "color", "$value": "{primitives.accent.red}", "$description": "Error, peligro o eliminación." }
+    }
+  },
+  "domains": {
+    "syntax": {
+      "function": { "$type": "color", "$value": "{primitives.accent.blue}", "$description": "Funciones, llamadas y métodos." },
+      "keyword": { "$type": "color", "$value": "{primitives.accent.purple}", "$description": "Keywords, modificadores y almacenamiento." },
+      "string": { "$type": "color", "$value": "{primitives.accent.green}", "$description": "Strings y literales de texto." },
+      "type": { "$type": "color", "$value": "{primitives.accent.yellow}", "$description": "Tipos, clases e interfaces." },
+      "constant": { "$type": "color", "$value": "{primitives.accent.orange}", "$description": "Constantes, números y booleanos." },
+      "preprocessor": { "$type": "color", "$value": "{primitives.accent.magenta}", "$description": "Preprocesamiento y acento adicional." },
+      "error": { "$type": "color", "$value": "{primitives.accent.red}", "$description": "Errores sintácticos o semánticos." }
+    },
+    "diff": {
+      "added": { "$type": "color", "$value": "{primitives.accentDim.green}", "$description": "Fondo de contenido añadido." },
+      "addedEmphasis": { "$type": "color", "$value": "{primitives.accent.green}", "$description": "Énfasis de contenido añadido." },
+      "removed": { "$type": "color", "$value": "{primitives.accentDim.red}", "$description": "Fondo de contenido eliminado." },
+      "removedEmphasis": { "$type": "color", "$value": "{primitives.accent.red}", "$description": "Énfasis de contenido eliminado." }
+    }
+  },
+  "projections": {
+    "ansi": {
+      "black": { "$type": "color", "$value": "{primitives.neutral.surface}", "$description": "Negro ANSI sobre la superficie base." },
+      "red": { "$type": "color", "$value": "{domains.syntax.error}", "$description": "Rojo ANSI para errores." },
+      "green": { "$type": "color", "$value": "{domains.syntax.string}", "$description": "Verde ANSI para texto y resultados positivos." },
+      "yellow": { "$type": "color", "$value": "{semantic.status.warning}", "$description": "Amarillo ANSI para advertencias." },
+      "blue": { "$type": "color", "$value": "{domains.syntax.function}", "$description": "Azul ANSI para funciones." },
+      "magenta": { "$type": "color", "$value": "{primitives.accent.purple}", "$description": "Magenta ANSI para keywords." },
+      "cyan": { "$type": "color", "$value": "{semantic.interaction.focus}", "$description": "Cyan ANSI para foco." },
+      "white": { "$type": "color", "$value": "{semantic.content.primary}", "$description": "Blanco ANSI para contenido principal." },
+      "brightBlack": { "$type": "color", "$value": "{semantic.content.subtle}", "$description": "Negro brillante ANSI para contenido sutil." },
+      "brightRed": { "$type": "color", "$value": "{domains.syntax.error}", "$description": "Rojo brillante ANSI para errores." },
+      "brightGreen": { "$type": "color", "$value": "{domains.syntax.string}", "$description": "Verde brillante ANSI para texto." },
+      "brightYellow": { "$type": "color", "$value": "{semantic.status.warning}", "$description": "Amarillo brillante ANSI para advertencias." },
+      "brightBlue": { "$type": "color", "$value": "{domains.syntax.function}", "$description": "Azul brillante ANSI para funciones." },
+      "brightMagenta": { "$type": "color", "$value": "{primitives.accent.magenta}", "$description": "Magenta brillante ANSI como acento adicional." },
+      "brightCyan": { "$type": "color", "$value": "{semantic.interaction.focus}", "$description": "Cyan brillante ANSI para foco." },
+      "brightWhite": { "$type": "color", "$value": "#FFFFFF", "$description": "Blanco ANSI de máxima intensidad." }
+    }
+  }
+}
