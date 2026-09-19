@@ -2,6 +2,8 @@
 
 [Static Noise](https://github.com/hcastillaq/static-noise) visual style adapter for the [Ghostty](https://ghostty.org) terminal emulator.
 
+![Static Noise for Ghostty preview](assets/preview.png)
+
 Static Noise is a dark chromatic visual identity designed for developer tools, featuring deep surfaces, high-contrast text, and an electric cyan focus cursor. This adapter translates those semantic color tokens into an official Ghostty theme.
 
 ## Requirements
