@@ -18,8 +18,8 @@ Run the following command in your terminal to download the latest release direct
 
 ```bash
 mkdir -p ~/.config/ghostty/themes
-curl -fsSL -o ~/.config/ghostty/themes/"Static Noise" \
-  https://github.com/hcastillaq/static-noise.ghostty/releases/latest/download/Static%20Noise
+curl -fsSL -o ~/.config/ghostty/themes/static-noise \
+  https://github.com/hcastillaq/static-noise.ghostty/releases/latest/download/static-noise
 ```
 
 ### 2. Configure Ghostty
@@ -27,7 +27,7 @@ curl -fsSL -o ~/.config/ghostty/themes/"Static Noise" \
 Add the theme to your Ghostty configuration file (`~/.config/ghostty/config`):
 
 ```ini
-theme = Static Noise
+theme = static-noise
 ```
 
 ### 3. Reload
@@ -45,6 +45,30 @@ Static Noise avoids absolute blacks and builds visual hierarchy across five prin
 - **Extended Palette:** Full 256-color space derived dynamically by Ghostty (`palette-generate = true`) to harmonize with the core palette.
 
 For more details on the design system and tokens, visit the [Static Noise specification](https://github.com/hcastillaq/static-noise).
+
+## Development
+
+Build the theme into `dist/static-noise`:
+
+```bash
+npm run generate
+```
+
+Run the unit test suite:
+
+```bash
+npm test
+```
+
+Validate syntax with Ghostty (optional, if `ghostty` is installed locally):
+
+```bash
+npm run validate:ghostty
+```
+
+## Updating Static Noise
+
+The source of truth for upstream palette releases is `static-noise.lock.json`. Updates are strictly manual; no command will rewrite your lock.
 
 ## License
 
