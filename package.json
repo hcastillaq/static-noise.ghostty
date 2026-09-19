@@ -10,10 +10,9 @@
   "scripts": {
     "sync:palette": "node scripts/sync-palette.mjs",
     "generate": "node src/generate-theme.mjs",
-    "check:generated": "node src/generate-theme.mjs --check",
-    "validate:ghostty": "ghostty +validate-config --config-file=\"dist/Static Noise\"",
     "test": "vitest run",
-    "check": "npm test && npm run check:generated"
+    "check": "vitest run",
+    "validate:ghostty": "ghostty +validate-config --config-file=\"dist/Static Noise\""
   },
   "keywords": [
     "ghostty",

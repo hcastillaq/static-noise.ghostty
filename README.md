@@ -50,22 +50,16 @@ Detailed mapping decisions are documented in [`docs/mapping.md`](docs/mapping.md
 
 ## Development and Verification
 
-Run the full offline verification suite:
+Generate the theme into `dist/Static Noise`:
+
+```bash
+npm run generate
+```
+
+Run the verification test suite:
 
 ```bash
 npm test
-```
-
-Check that the committed theme matches the current snapshot:
-
-```bash
-npm run check:generated
-```
-
-Run all project checks together:
-
-```bash
-npm run check
 ```
 
 Validate syntax with Ghostty (optional, if `ghostty` is installed locally):

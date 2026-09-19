@@ -29,9 +29,9 @@ npm run sync:palette
 This command will:
 - Validate the lockfile format.
 - Clone or fetch the specified SHA in an isolated temporary Git workspace.
-- Validate that `palette.json` matches `palette.schema.json`.
+- Validate that `palette.json` matches `schemas/palette.schema.json`.
 - Confirm that `palette.version` matches `lock.version`.
-- Atomically update `vendor/static-noise/palette.json` and `vendor/static-noise/palette.schema.json`.
+- Atomically update `vendor/static-noise/palette.json` and `vendor/static-noise/schemas/palette.schema.json`.
 
 If the SHA is unreachable or the version does not match, synchronization aborts and leaves existing vendor files untouched.
 
@@ -45,10 +45,10 @@ npm run generate
 
 ### 4. Run the Verification Suite
 
-Run all tests and validators:
+Run the test suite:
 
 ```bash
-npm run check
+npm test
 ```
 
 ### 5. Review and Commit

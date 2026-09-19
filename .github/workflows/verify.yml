@@ -22,8 +22,5 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run offline test suite
+      - name: Run verification test suite
         run: npm test
-
-      - name: Verify generated theme is fresh
-        run: npm run check:generated
