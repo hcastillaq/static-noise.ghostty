@@ -1,0 +1,36 @@
+# Static Noise for Ghostty
+# Upstream version: 0.0.1
+# Upstream commit: 3a1440055e1c87aec61ac885f137aad7f816d3ec
+# Generated file -- do not edit manually
+
+background = #0F1117
+foreground = #E6E2D6
+cursor-color = #72EAD5
+cursor-text = #0F1117
+selection-background = #242B3D
+selection-foreground = #E6E2D6
+
+split-divider-color = #6E7588
+search-background = #443B25
+search-foreground = #E6E2D6
+search-selected-background = #72EAD5
+search-selected-foreground = #0F1117
+
+palette-generate = true
+
+palette = 0=#141720
+palette = 1=#EF7785
+palette = 2=#A3D98B
+palette = 3=#EDD071
+palette = 4=#83BFFF
+palette = 5=#C2A7FF
+palette = 6=#72EAD5
+palette = 7=#E6E2D6
+palette = 8=#62697B
+palette = 9=#EF7785
+palette = 10=#A3D98B
+palette = 11=#EDD071
+palette = 12=#83BFFF
+palette = 13=#F08BC2
+palette = 14=#72EAD5
+palette = 15=#FFFFFF
