@@ -11,20 +11,29 @@ This project consumes a pinned release of [Static Noise](https://github.com/hcas
 
 ## Quick Install
 
-1. Copy the generated theme file into your Ghostty themes folder:
+### One-line curl install
+
+```bash
+mkdir -p ~/.config/ghostty/themes
+curl -fsSL -o ~/.config/ghostty/themes/"Static Noise" https://raw.githubusercontent.com/hcastillaq/static-noise.ghostty/main/dist/Static%20Noise
+```
+
+### Or copy from local clone
 
 ```bash
 mkdir -p ~/.config/ghostty/themes
 cp "dist/Static Noise" ~/.config/ghostty/themes/
 ```
 
-2. Open your Ghostty configuration (`~/.config/ghostty/config`) and add:
+### Apply in Ghostty
+
+Open your Ghostty configuration (`~/.config/ghostty/config`) and add:
 
 ```ini
 theme = Static Noise
 ```
 
-3. Reload Ghostty (`Cmd+Shift+,` on macOS or restart the application).
+Reload Ghostty (`Cmd+Shift+,` on macOS or restart the application).
 
 ## Visual Identity Mapping
 
@@ -56,7 +65,7 @@ Generate the theme into `dist/Static Noise`:
 npm run generate
 ```
 
-Run the verification test suite:
+Run the unit test suite:
 
 ```bash
 npm test
