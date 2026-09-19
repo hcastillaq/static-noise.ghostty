@@ -1,65 +1,65 @@
+/**
+ * Direct semantic-to-Ghostty mapping.
+ * Each entry references an unambiguous semantic intention in Static Noise.
+ */
 export const ghosttyCoreMapping = {
   background: {
     tokenPath: 'semantic.surface.canvas',
-    kind: 'direct',
-    description: 'Lienzo raíz oscuro de Static Noise.'
+    description: 'Root dark canvas for terminal background.'
   },
   foreground: {
     tokenPath: 'semantic.content.primary',
-    kind: 'direct',
-    description: 'Texto principal y lectura prioritaria.'
+    description: 'Primary text for regular high-contrast reading.'
   },
   'cursor-color': {
     tokenPath: 'semantic.interaction.focus',
-    kind: 'direct',
-    description: 'Color de foco activo y cursor.'
+    description: 'Active attention focus accent for cursor block.'
   },
   'cursor-text': {
     tokenPath: 'semantic.interaction.onFocus',
-    kind: 'direct',
-    description: 'Texto dibujado sobre la superficie de foco.'
+    description: 'Text rendered underneath active cursor.'
   },
   'selection-background': {
     tokenPath: 'semantic.surface.selection',
-    kind: 'direct',
-    description: 'Superficie neutral de selección sin foco.'
+    description: 'Non-focus surface highlighting selected text.'
   },
   'selection-foreground': {
     tokenPath: 'semantic.content.primary',
-    kind: 'direct',
-    description: 'Contenido principal legible dentro de la selección.'
+    description: 'Readable text within selected regions.'
   }
 };
 
+/**
+ * Derived local mappings for Ghostty chrome features not covered directly by Static Noise.
+ * Kept strictly mapped to existing semantic or primitive tokens without arbitrary hex values.
+ */
 export const ghosttyDerivedMapping = {
   'split-divider-color': {
     tokenPath: 'semantic.outline.strong',
-    kind: 'derived',
-    description: 'Divisor estructural visible que no compite con el cursor de foco.'
+    description: 'Structural boundary for pane splits without competing with cursor focus.'
   },
   'search-background': {
     tokenPath: 'primitives.accentDim.yellow',
-    kind: 'derived',
-    description: 'Fondo tenue de atención para coincidencias pasivas de búsqueda.'
+    description: 'Dimmed attention background for passive search matches.'
   },
   'search-foreground': {
     tokenPath: 'semantic.content.primary',
-    kind: 'derived',
-    description: 'Texto principal sobre fondo de búsqueda tenue.'
+    description: 'Readable primary text over passive search background.'
   },
   'search-selected-background': {
     tokenPath: 'semantic.interaction.focus',
-    kind: 'derived',
-    description: 'Coincidencia activa enfocada con el acento de atención de Static Noise.'
+    description: 'Cyan attention accent on active focused search match.'
   },
   'search-selected-foreground': {
     tokenPath: 'semantic.interaction.onFocus',
-    kind: 'derived',
-    description: 'Texto contrastado sobre la coincidencia activa enfocada.'
+    description: 'Text drawn on active focused search match.'
   }
 };
 
-export const ghosttyAnsiIndices = [
+/**
+ * Canonical 16-color ANSI projection slot names in index order (0 to 15).
+ */
+export const GHOSTTY_ANSI_NAMES = [
   'black',
   'red',
   'green',

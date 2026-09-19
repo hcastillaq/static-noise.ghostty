@@ -1,57 +1,56 @@
 import { readFile, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { checkThemeFreshness, generateThemeFile, renderTheme } from '../src/generate-theme.mjs';
-import { ghosttyCoreMapping, ghosttyDerivedMapping } from '../src/ghostty-mapping.mjs';
+import { checkThemeFreshness, renderTheme } from '../src/generate-theme.mjs';
+import { GHOSTTY_ANSI_NAMES, ghosttyCoreMapping, ghosttyDerivedMapping } from '../src/ghostty-mapping.mjs';
 import { readAndValidateLock } from '../src/lock.mjs';
 
-const distPath = path.resolve('dist/Static Noise');
-const HEX_COLOR = /^#[0-9A-Fa-f]{6}$/;
+const HEX_COLOR_PATTERN = /^#[0-9A-Fa-f]{6}$/;
 
-describe('Ghostty theme structure and freshness', () => {
-  it('renders deterministically with valid Ghostty syntax', async () => {
+describe('Ghostty theme generation and distribution contract', () => {
+  it('generates a syntactically valid Ghostty theme with all required keys from active lock', async () => {
     const lock = await readAndValidateLock();
     const rendered = await renderTheme();
 
-    // Verify metadata headers reflect the active lock without hardcoding literal values
+    // Headers must reference current lock dynamically without hardcoding specific numbers
     expect(rendered).toContain(`# Upstream version: ${lock.version}`);
     expect(rendered).toContain(`# Upstream commit: ${lock.sha}`);
     expect(rendered).toContain('palette-generate = true');
 
-    // Verify all mapped configuration keys exist and carry a valid hex value
-    const allExpectedKeys = [
+    // Every mapped key must be present with key = #RRGGBB syntax
+    const expectedKeys = [
       ...Object.keys(ghosttyCoreMapping),
       ...Object.keys(ghosttyDerivedMapping)
     ];
 
-    for (const key of allExpectedKeys) {
+    for (const key of expectedKeys) {
       const match = rendered.match(new RegExp(`^${key} = (#[0-9A-Fa-f]{6})$`, 'm'));
-      expect(match, `Key '${key}' should be present with a valid hex color`).not.toBeNull();
+      expect(match, `Ghostty configuration key '${key}' missing or invalid`).not.toBeNull();
     }
 
-    // Verify exactly 16 ANSI palette entries with valid hex colors
-    for (let i = 0; i < 16; i += 1) {
-      const match = rendered.match(new RegExp(`^palette = ${i}=(#[0-9A-Fa-f]{6})$`, 'm'));
-      expect(match, `ANSI slot ${i} should have a valid hex color`).not.toBeNull();
+    // Every ANSI index 0 to 15 must be emitted with a valid hex color
+    for (let index = 0; index < GHOSTTY_ANSI_NAMES.length; index += 1) {
+      const match = rendered.match(new RegExp(`^palette = ${index}=(#[0-9A-Fa-f]{6})$`, 'm'));
+      expect(match, `ANSI slot ${index} missing or invalid in generated theme`).not.toBeNull();
     }
   });
 
-  it('passes freshness check on the committed distribution file', async () => {
+  it('guarantees committed dist/Static Noise matches exact generator output', async () => {
     const isFresh = await checkThemeFreshness();
     expect(isFresh).toBe(true);
   });
 
-  it('detects when the distribution file is missing or modified', async () => {
-    const missing = path.resolve('dist/does-not-exist');
-    await expect(checkThemeFreshness({ outputPath: missing })).rejects.toThrow(/Generated theme missing/);
+  it('detects when distribution file is missing or modified', async () => {
+    const missingFile = path.resolve('dist/non-existent-theme-file');
+    await expect(checkThemeFreshness({ outputPath: missingFile })).rejects.toThrow(/Generated theme missing/);
 
-    const tmpStale = path.resolve('dist/.test-stale.tmp');
-    await writeFile(tmpStale, '# Stale theme content\n', 'utf8');
+    const testStaleFile = path.resolve('dist/.stale-test.tmp');
+    await writeFile(testStaleFile, '# Outdated theme content\n', 'utf8');
 
     try {
-      await expect(checkThemeFreshness({ outputPath: tmpStale })).rejects.toThrow(/is stale or was modified manually/);
+      await expect(checkThemeFreshness({ outputPath: testStaleFile })).rejects.toThrow(/is stale or was modified manually/);
     } finally {
-      await unlink(tmpStale).catch(() => {});
+      await unlink(testStaleFile).catch(() => {});
     }
   });
 });

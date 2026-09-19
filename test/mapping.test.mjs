@@ -1,58 +1,53 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { ghosttyAnsiIndices, ghosttyCoreMapping, ghosttyDerivedMapping } from '../src/ghostty-mapping.mjs';
-import { resolveNamedPath, resolveToken } from '../src/resolve-token.mjs';
+import { GHOSTTY_ANSI_NAMES, ghosttyCoreMapping, ghosttyDerivedMapping } from '../src/ghostty-mapping.mjs';
+import { resolveNamedPath } from '../src/resolve-token.mjs';
 
-const vendorDir = path.resolve('vendor/static-noise');
-const HEX_COLOR = /^#[0-9A-Fa-f]{6}$/;
+const vendorPalettePath = path.resolve('vendor/static-noise/palette.json');
+const HEX_COLOR_PATTERN = /^#[0-9A-Fa-f]{6}$/;
 
-describe('token resolution and mapping contract', () => {
-  it('resolves direct and nested references without circular loops', () => {
-    const testPalette = {
-      primitives: {
-        accent: { blue: { $type: 'color', $value: '#83BFFF' } }
-      },
-      semantic: {
-        action: { $type: 'color', $value: '{primitives.accent.blue}' }
-      }
-    };
+describe('Static Noise mapping contract for Ghostty', () => {
+  it('defines only abstract token paths without hardcoded color literals', () => {
+    const allMappings = { ...ghosttyCoreMapping, ...ghosttyDerivedMapping };
 
-    expect(resolveNamedPath(testPalette, 'semantic.action')).toMatch(HEX_COLOR);
+    for (const [key, config] of Object.entries(allMappings)) {
+      expect(typeof config.tokenPath).toBe('string');
+      expect(HEX_COLOR_PATTERN.test(config.tokenPath), `${key} must not be a hex color`).toBe(false);
+    }
+  });
 
-    const circular = {
+  it('resolves every core and derived Ghostty option to a valid color using the vendored snapshot', async () => {
+    const raw = await readFile(vendorPalettePath, 'utf8');
+    const palette = JSON.parse(raw);
+    const allMappings = { ...ghosttyCoreMapping, ...ghosttyDerivedMapping };
+
+    for (const [key, config] of Object.entries(allMappings)) {
+      const resolved = resolveNamedPath(palette, config.tokenPath);
+      expect(resolved, `Option '${key}' failed resolution`).toMatch(HEX_COLOR_PATTERN);
+    }
+  });
+
+  it('maps exactly 16 ANSI projections into valid colors in index order', async () => {
+    const raw = await readFile(vendorPalettePath, 'utf8');
+    const palette = JSON.parse(raw);
+
+    expect(GHOSTTY_ANSI_NAMES).toHaveLength(16);
+
+    for (const ansiName of GHOSTTY_ANSI_NAMES) {
+      const resolved = resolveNamedPath(palette, `projections.ansi.${ansiName}`);
+      expect(resolved, `ANSI projection '${ansiName}' failed resolution`).toMatch(HEX_COLOR_PATTERN);
+    }
+  });
+
+  it('rejects circular references and non-existent tokens with explicit errors', () => {
+    const circularPalette = {
       a: { $type: 'color', $value: '{b}' },
       b: { $type: 'color', $value: '{a}' }
     };
-    expect(() => resolveNamedPath(circular, 'a')).toThrow(/Circular/);
-  });
+    expect(() => resolveNamedPath(circularPalette, 'a')).toThrow(/Circular token reference/);
 
-  it('contains no hardcoded hex colors in mapping definitions', () => {
-    const allMappings = { ...ghosttyCoreMapping, ...ghosttyDerivedMapping };
-    for (const [key, mapping] of Object.entries(allMappings)) {
-      expect(HEX_COLOR.test(mapping.tokenPath), `${key} should reference a token path, not a literal color`).toBe(false);
-      expect(typeof mapping.tokenPath).toBe('string');
-    }
-  });
-
-  it('resolves all Ghostty options and 16 ANSI projections to valid hex colors in current snapshot', async () => {
-    const palette = JSON.parse(await readFile(path.join(vendorDir, 'palette.json'), 'utf8'));
-    const allMappings = { ...ghosttyCoreMapping, ...ghosttyDerivedMapping };
-
-    for (const [key, mapping] of Object.entries(allMappings)) {
-      const color = resolveNamedPath(palette, mapping.tokenPath);
-      expect(color, `${key} (${mapping.tokenPath}) must resolve to a valid hex color`).toMatch(HEX_COLOR);
-    }
-
-    expect(ghosttyAnsiIndices).toHaveLength(16);
-    for (const name of ghosttyAnsiIndices) {
-      const color = resolveNamedPath(palette, `projections.ansi.${name}`);
-      expect(color, `projections.ansi.${name} must resolve to a valid hex color`).toMatch(HEX_COLOR);
-    }
-  });
-
-  it('fails with a descriptive error when a required token path does not exist', () => {
-    const emptyPalette = { semantic: {} };
-    expect(() => resolveNamedPath(emptyPalette, 'semantic.surface.canvas')).toThrow(/Missing or invalid token path/);
+    const emptyPalette = {};
+    expect(() => resolveNamedPath(emptyPalette, 'semantic.missing.token')).toThrow(/Missing or invalid token path/);
   });
 });
