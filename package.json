@@ -1,0 +1,30 @@
+{
+  "name": "@hcastillaq/static-noise-ghostty",
+  "version": "0.0.1",
+  "description": "Static Noise visual style adapter for Ghostty terminal",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "sync:palette": "node scripts/sync-palette.mjs",
+    "generate": "node src/generate-theme.mjs",
+    "check:generated": "node src/generate-theme.mjs --check",
+    "validate:ghostty": "ghostty +validate-config --config-file=\"dist/Static Noise\"",
+    "test": "vitest run",
+    "check": "npm test && npm run check:generated && npm run validate:ghostty"
+  },
+  "keywords": [
+    "ghostty",
+    "static-noise",
+    "terminal-theme",
+    "color-palette"
+  ],
+  "author": "Hernan Castilla <hcastillaq@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "vitest": "^3.0.8"
+  }
+}
